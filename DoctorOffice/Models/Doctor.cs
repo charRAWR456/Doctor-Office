@@ -7,13 +7,11 @@ namespace DoctorOffice.Models
   public class Doctor
   {
     private string _name;
-    private string _specialty;
     private int _id;
 
-    public Doctor(string name, string specialty, int id = 0)
+    public Doctor(string name, int id = 0)
     {
       _name = name;
-      _specialty = specialty;
       _id = id;
     }
     public override bool Equals(System.Object otherDoctor)
@@ -40,10 +38,6 @@ namespace DoctorOffice.Models
     {
       return _id;
     }
-    public string GetSpecialty()
-    {
-      return _specialty;
-    }
     public static List<Doctor> GetAll()
     {
       List<Doctor> allDoctors = new List<Doctor>{};
@@ -56,8 +50,7 @@ namespace DoctorOffice.Models
       {
         int doctorId = rdr.GetInt32(0);
         string doctorName = rdr.GetString(1);
-        string doctorSpecialty = rdr.GetString(2);
-        Doctor newDoctor = new Doctor(doctorName, doctorSpecialty, doctorId);
+        Doctor newDoctor = new Doctor(doctorName, doctorId);
         allDoctors.Add(newDoctor);
       }
       conn.Close();
@@ -73,17 +66,12 @@ namespace DoctorOffice.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO doctors (name, specialty) VALUES (@name, @specialty);";
+      cmd.CommandText = @"INSERT INTO doctors (name) VALUES (@name);";
 
       MySqlParameter name = new MySqlParameter();
       name.ParameterName = "@name";
       name.Value = this._name;
       cmd.Parameters.Add(name);
-
-      MySqlParameter specialty = new MySqlParameter();
-      specialty.ParameterName = "@specialty";
-      specialty.Value = this._specialty;
-      cmd.Parameters.Add(specialty);
 
       cmd.ExecuteNonQuery();
       _id = (int) cmd.LastInsertedId;
@@ -144,6 +132,42 @@ namespace DoctorOffice.Models
     {
 
     }
+    public List<Specialty> GetSpecialtys()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT specialties.* FROM doctors
+      JOIN doctors_specialties ON (doctors.id = doctors_specialties.doctor_id)
+      JOIN specialties ON (doctors_specialties.specialty_id = specialties.id)
+      WHERE doctors.id = @DoctorId;";
+
+      MySqlParameter doctorIdParameter = new MySqlParameter();
+      doctorIdParameter.ParameterName = "@DoctorId";
+      doctorIdParameter.Value = _id;
+      cmd.Parameters.Add(doctorIdParameter);
+
+      MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+      List<Specialty> specialties = new List<Specialty>{};
+
+      while(rdr.Read())
+      {
+        int specialtyId = rdr.GetInt32(0);
+        string specialtyDescription = rdr.GetString(1);
+        Specialty newSpecialty = new Specialty(specialtyDescription, specialtyId);
+        specialties.Add(newSpecialty);
+      }
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return specialties;
+    }
+    public void AddSpecialty(Specialty newSpecialty)
+    {
+
+    }
     public void Delete()
     {
       MySqlConnection conn = DB.Connection();
@@ -177,15 +201,13 @@ namespace DoctorOffice.Models
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
       int DoctorId = 0;
       string DoctorName = "";
-      string DoctorSpecialty = "";
 
       while(rdr.Read())
       {
         DoctorId = rdr.GetInt32(0);
         DoctorName = rdr.GetString(1);
-        DoctorSpecialty = rdr.GetString(2);
       }
-      Doctor newDoctor = new Doctor(DoctorName, DoctorSpecialty, DoctorId);
+      Doctor newDoctor = new Doctor(DoctorName, DoctorId);
       conn.Close();
       if (conn != null)
       {

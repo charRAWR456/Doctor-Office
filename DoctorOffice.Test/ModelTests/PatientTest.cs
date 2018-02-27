@@ -55,7 +55,7 @@ namespace DoctorOffice.Tests
     public void Delete_DeletesPatientAssociationsFromDatabase_PatientList()
    {
      //Arrange
-     Doctor testDoctor = new Doctor("Joey", "Chiropractor");
+     Doctor testDoctor = new Doctor("Joey");
      testDoctor.Save();
 
      string testName = "Jerry";
@@ -86,5 +86,6 @@ namespace DoctorOffice.Tests
         //Assert
         Assert.AreEqual(testPatient, result);
       }
+
   }
 }

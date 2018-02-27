@@ -31,8 +31,8 @@ namespace DoctorOffice.Tests
     public void GetNameAndSpecialty_ReturnsTrueForSameNameAndSpecialty_Doctor()
     {
       //Arrange, Act
-      Doctor firstDoctor = new Doctor("Sam","Eyes");
-      Doctor secondDoctor = new Doctor ("Sam","Eyes");
+      Doctor firstDoctor = new Doctor("Sam");
+      Doctor secondDoctor = new Doctor ("Sam");
 
       //Assert
       Assert.AreEqual(firstDoctor, secondDoctor);
@@ -41,7 +41,7 @@ namespace DoctorOffice.Tests
     public void Save_DoctorSavesToDatabase_DoctorList()
     {
       //Arrange
-      Doctor testDoctor = new Doctor("Brad", "Foot");
+      Doctor testDoctor = new Doctor("Brad");
       testDoctor.Save();
 
       //Act
@@ -59,8 +59,7 @@ namespace DoctorOffice.Tests
       testPatient.Save();
 
       string testName = "Tony";
-      string testSpecialty = "Leg";
-      Doctor testDoctor = new Doctor(testName, testSpecialty);
+      Doctor testDoctor = new Doctor(testName);
       testDoctor.Save();
 
       //Act
@@ -73,27 +72,27 @@ namespace DoctorOffice.Tests
       //Assert
       CollectionAssert.AreEqual(testPatientDoctors, resultPatientDoctors);
     }
-    [TestMethod]
-    public void DuplicateSpecialty_DoctorSameSpecialty_DoctorList()
-    {
-      //Arrange
-      Doctor doctorOne = new Doctor("Brad", "Foot");
-      doctorOne.Save();
-      Doctor doctorTwo = new Doctor("Sally", "Foot");
-      doctorTwo.Save();
+    // [TestMethod]
+    // public void DuplicateSpecialty_DoctorSameSpecialty_DoctorList()
+    // {
+    //   //Arrange
+    //   Doctor doctorOne = new Doctor("Brad");
+    //   doctorOne.Save();
+    //   Doctor doctorTwo = new Doctor("Sally");
+    //   doctorTwo.Save();
 
       //Act
-      List<Doctor> result = Doctor.GetAll();
-      List<Doctor> testList = new List<Doctor>{doctorOne, doctorTwo};
-
-      //Assert
-      CollectionAssert.AreEqual(testList, result);
-    }
+    //   List<Doctor> result = Doctor.GetAll();
+    //   List<Doctor> testList = new List<Doctor>{doctorOne, doctorTwo};
+    //
+    //   //Assert
+    //   CollectionAssert.AreEqual(testList, result);
+    // }
     [TestMethod]
     public void Find_FindsDoctorInDatabase_Doctor()
     {
       //Arrange
-      Doctor testDoctor = new Doctor("Sam", "Ear");
+      Doctor testDoctor = new Doctor("Sam");
       testDoctor.Save();
 
       //Act
@@ -102,5 +101,28 @@ namespace DoctorOffice.Tests
       //Assert
       Assert.AreEqual(testDoctor, foundDoctor);
     }
+  //   [TestMethod]
+  //  public void Test_FindSpecialty_Doctor()
+  //  {
+  //    //Arrange
+  //    Doctor testDoctor = new Doctor("Sam", List<>);
+  //    testDoctor.Save();
+   //
+  //    Specialty testSpecialty = new Specialty("Mow the lawn");
+  //    testSpecialty.Save();
+   //
+  //    Specialty testSpecialty2 = new Specialty("Water the garden");
+  //    testSpecialty2.Save();
+   //
+  //    //Act
+  //    testDoctor.AddSpecialty(testSpecialty);
+  //    testDoctor.AddSpecialty(testSpecialty2);
+   //
+  //    List<Patient> result = testDoctor.GetPatients();
+  //    List<Patient> testList = new List<Patient>{testPatient, testPatient2};
+   //
+  //    //Assert
+  //    CollectionAssert.AreEqual(testList, result);
+  //  }
   }
 }
