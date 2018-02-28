@@ -14,6 +14,7 @@ namespace DoctorOffice.Models
       _name = name;
       _id = id;
     }
+    
     public override bool Equals(System.Object otherDoctor)
     {
       if (!(otherDoctor is Doctor))
@@ -26,18 +27,22 @@ namespace DoctorOffice.Models
         return this.GetId().Equals(newDoctor.GetId());
       }
     }
+
     public override int GetHashCode()
     {
       return this.GetId().GetHashCode();
     }
+
     public string GetName()
     {
       return _name;
     }
+
     public int GetId()
     {
       return _id;
     }
+
     public static List<Doctor> GetAll()
     {
       List<Doctor> allDoctors = new List<Doctor>{};
@@ -60,6 +65,7 @@ namespace DoctorOffice.Models
       }
       return allDoctors;
     }
+
     public void Save()
     {
       MySqlConnection conn = DB.Connection();
@@ -82,6 +88,7 @@ namespace DoctorOffice.Models
         conn.Dispose();
       }
     }
+
     public static void DeleteAll()
     {
       MySqlConnection conn = DB.Connection();
@@ -95,6 +102,7 @@ namespace DoctorOffice.Models
         conn.Dispose();
       }
     }
+
     public List<Patient> GetPatients()
     {
       MySqlConnection conn = DB.Connection();
@@ -128,6 +136,7 @@ namespace DoctorOffice.Models
       }
       return patients;
     }
+
     public void AddPatient(Patient newPatient)
     {
       MySqlConnection conn = DB.Connection();
@@ -149,9 +158,10 @@ namespace DoctorOffice.Models
       conn.Close();
       if (conn != null)
       {
-          conn.Dispose();
+        conn.Dispose();
       }
     }
+
     public List<Specialty> GetSpecialtys()
     {
       MySqlConnection conn = DB.Connection();
@@ -184,6 +194,7 @@ namespace DoctorOffice.Models
       }
       return specialties;
     }
+
     public void AddSpecialty(Specialty newSpecialty)
     {
       MySqlConnection conn = DB.Connection();
@@ -205,9 +216,10 @@ namespace DoctorOffice.Models
       conn.Close();
       if (conn != null)
       {
-          conn.Dispose();
+        conn.Dispose();
       }
     }
+
     public void Delete()
     {
       MySqlConnection conn = DB.Connection();
@@ -226,6 +238,7 @@ namespace DoctorOffice.Models
         conn.Close();
       }
     }
+
     public static Doctor Find(int id)
     {
       MySqlConnection conn = DB.Connection();
@@ -255,31 +268,31 @@ namespace DoctorOffice.Models
       }
       return newDoctor;
     }
+
     public void Edit(string newDoctor)
-{
-  MySqlConnection conn = DB.Connection();
-  conn.Open();
-  var cmd = conn.CreateCommand() as MySqlCommand;
-  cmd.CommandText = @"UPDATE doctors SET name = @newDoctor WHERE id = @searchId;";
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"UPDATE doctors SET name = @newDoctor WHERE id = @searchId;";
 
-  MySqlParameter searchId = new MySqlParameter();
-  searchId.ParameterName = "@searchId";
-  searchId.Value = _id;
-  cmd.Parameters.Add(searchId);
+      MySqlParameter searchId = new MySqlParameter();
+      searchId.ParameterName = "@searchId";
+      searchId.Value = _id;
+      cmd.Parameters.Add(searchId);
 
-  MySqlParameter name = new MySqlParameter();
-  name.ParameterName = "@newDoctor";
-  name.Value = newDoctor;
-  cmd.Parameters.Add(name);
+      MySqlParameter name = new MySqlParameter();
+      name.ParameterName = "@newDoctor";
+      name.Value = newDoctor;
+      cmd.Parameters.Add(name);
 
-  cmd.ExecuteNonQuery();
-  _name = newDoctor;
-  conn.Close();
-  if (conn != null)
-  {
-    conn.Dispose();
-  }
-
-}
+      cmd.ExecuteNonQuery();
+      _name = newDoctor;
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+    }
   }
 }

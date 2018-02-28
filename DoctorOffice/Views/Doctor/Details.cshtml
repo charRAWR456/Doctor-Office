@@ -2,32 +2,34 @@
 @{
   Layout = "_Layout";
 }
+<title>Doctor Details</title>
 
 <div class="container">
-<h1>Doctor office</h1>
-<h2>Doctor: @Model["doctor"].GetName()</h2>
-<hr />
-@if (@Model["doctorPatients"].Count != 0)
-{
-  <h4>Here are all the patients that see this Doctor:</h4>
-  <ul>
+  <h1>Doctor office</h1>
+  <h1>Doctor Details</h1>
+  <h2>Doctor: @Model["doctor"].GetName()</h2>
+  <hr />
+  @if (@Model["doctorPatients"].Count != 0)
+  {
+    <h4>Here are all the patients that see this Doctor:</h4>
+    <ul>
     @foreach (var patient in @Model["doctorPatients"])
     {
       <li>@patient.GetName() | @patient.GetBirthDate()<a href="/patients/@patient.GetId()/update">Edit</a> | <a method="post" href="/patients/@patient.GetId()/delete">Delete</a></li>
     }
-  </ul>
-}
-<h4>Add a patient to this doctor:</h4>
-<form action='/doctors/@Model["doctor"].GetId()/patients/new' method='post'>
-  <label for='patient-id'>Select a patient</label>
-  <select id='patient-id' name='patient-id' type='text'>
-    @foreach (var patient in @Model["allPatients"])
-    {
-      <option value='@patient.GetId()'>@patient.GetName()</option>
-    }
-  </select>
-  <button type='submit'>Add</button>
-</form>
-<a href='/patients/new'>Add patient</a>
-<p><a href="/">Return to Main Page</a></p>
+    </ul>
+  }
+  <h4>Add a patient to this doctor:</h4>
+  <form action='/doctors/@Model["doctor"].GetId()/patients/new' method='post'>
+    <label for='patient-id'>Select a patient</label>
+    <select id='patient-id' name='patient-id' type='text'>
+      @foreach (var patient in @Model["allPatients"])
+      {
+        <option value='@patient.GetId()'>@patient.GetName()</option>
+      }
+    </select>
+    <button type='submit'>Add</button>
+  </form>
+  <a href='/patients/new'>Add patient</a>
+  <p><a href="/">Return to Main Page</a></p>
 </div>

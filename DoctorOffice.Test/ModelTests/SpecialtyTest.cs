@@ -19,15 +19,15 @@ namespace DoctorOffice.Tests
       Specialty.DeleteAll();
     }
     [TestMethod]
-        public void Equals_TrueForSameDescription_Specialty()
-        {
-          //Arrange, Act
-          Specialty firstSpecialty = new Specialty("Eye");
-          Specialty secondSpecialty = new Specialty("Eye");
+    public void Equals_TrueForSameDescription_Specialty()
+    {
+      //Arrange, Act
+      Specialty firstSpecialty = new Specialty("Eye");
+      Specialty secondSpecialty = new Specialty("Eye");
 
-          //Assert
-          Assert.AreEqual(firstSpecialty, secondSpecialty);
-        }
+      //Assert
+      Assert.AreEqual(firstSpecialty, secondSpecialty);
+    }
     [TestMethod]
     public void GetAll_DatabaseEmptyAtFirst_0()
     {
@@ -62,21 +62,21 @@ namespace DoctorOffice.Tests
       CollectionAssert.AreEqual(testList, result);
     }
     [TestMethod]
-        public void Save_AssignsIdToObject_id()
-        {
-          //Arrange
-          Specialty testSpecialty = new Specialty("Phychiatrist");
-          testSpecialty.Save();
+    public void Save_AssignsIdToObject_id()
+    {
+      //Arrange
+      Specialty testSpecialty = new Specialty("Phychiatrist");
+      testSpecialty.Save();
 
-          //Act
-          Specialty savedSpecialty = Specialty.GetAll()[0];
+      //Act
+      Specialty savedSpecialty = Specialty.GetAll()[0];
 
-          int result = savedSpecialty.GetId();
-          int testId = testSpecialty.GetId();
+      int result = savedSpecialty.GetId();
+      int testId = testSpecialty.GetId();
 
-          //Assert
-          Assert.AreEqual(testId, result);
-        }
+      //Assert
+      Assert.AreEqual(testId, result);
+    }
     [TestMethod]
     public void Delete_DeletesSpecialtyAssociationsFromDatabase_SpecialtyList()
     {
@@ -99,57 +99,57 @@ namespace DoctorOffice.Tests
       CollectionAssert.AreEqual(testDoctorSpecialtys, resultDoctorSpecialtys);
     }
     [TestMethod]
-        public void Find_FindsSpecialtyInDatabase_Specialty()
-        {
-          //Arrange
-          Specialty testSpecialty = new Specialty("Eye");
-          testSpecialty.Save();
+    public void Find_FindsSpecialtyInDatabase_Specialty()
+    {
+      //Arrange
+      Specialty testSpecialty = new Specialty("Eye");
+      testSpecialty.Save();
 
-          //Act
-          Specialty result = Specialty.Find(testSpecialty.GetId());
+      //Act
+      Specialty result = Specialty.Find(testSpecialty.GetId());
 
-          //Assert
-          Assert.AreEqual(testSpecialty, result);
-        }
-        [TestMethod]
-  public void AddDoctor_AddsDoctorToSpecialty_DoctorList()
-  {
-    //Arrange
-    Specialty testSpecialty = new Specialty("Therapist");
-    testSpecialty.Save();
+      //Assert
+      Assert.AreEqual(testSpecialty, result);
+    }
+    [TestMethod]
+    public void AddDoctor_AddsDoctorToSpecialty_DoctorList()
+    {
+      //Arrange
+      Specialty testSpecialty = new Specialty("Therapist");
+      testSpecialty.Save();
 
-    Doctor testDoctor = new Doctor("Joe");
-    testDoctor.Save();
+      Doctor testDoctor = new Doctor("Joe");
+      testDoctor.Save();
 
-    //Act
-    testSpecialty.AddDoctor(testDoctor);
+      //Act
+      testSpecialty.AddDoctor(testDoctor);
 
-    List<Doctor> result = testSpecialty.GetDoctors();
-    List<Doctor> testList = new List<Doctor>{testDoctor};
+      List<Doctor> result = testSpecialty.GetDoctors();
+      List<Doctor> testList = new List<Doctor>{testDoctor};
 
-    //Assert
-    CollectionAssert.AreEqual(testList, result);
-  }
-[TestMethod]
-  public void GetDoctors_ReturnsAllSpecialtyDoctors_DoctorList()
-  {
-    //Arrange
-    Specialty testSpecialty = new Specialty("Chiropractor");
-    testSpecialty.Save();
+      //Assert
+      CollectionAssert.AreEqual(testList, result);
+    }
+    [TestMethod]
+    public void GetDoctors_ReturnsAllSpecialtyDoctors_DoctorList()
+    {
+      //Arrange
+      Specialty testSpecialty = new Specialty("Chiropractor");
+      testSpecialty.Save();
 
-    Doctor testDoctor1 = new Doctor("Sam");
-    testDoctor1.Save();
+      Doctor testDoctor1 = new Doctor("Sam");
+      testDoctor1.Save();
 
-    Doctor testDoctor2 = new Doctor("Taylor");
-    testDoctor2.Save();
+      Doctor testDoctor2 = new Doctor("Taylor");
+      testDoctor2.Save();
 
-    //Act
-    testSpecialty.AddDoctor(testDoctor1);
-    List<Doctor> result = testSpecialty.GetDoctors();
-    List<Doctor> testList = new List<Doctor> {testDoctor1};
+      //Act
+      testSpecialty.AddDoctor(testDoctor1);
+      List<Doctor> result = testSpecialty.GetDoctors();
+      List<Doctor> testList = new List<Doctor> {testDoctor1};
 
-    //Assert
-    CollectionAssert.AreEqual(testList, result);
-  }
+      //Assert
+      CollectionAssert.AreEqual(testList, result);
+    }
   }
 }

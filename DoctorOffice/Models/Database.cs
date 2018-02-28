@@ -5,12 +5,12 @@ using DoctorOffice;
 
 namespace DoctorOffice.Models
 {
-    public class DB
+  public class DB
+  {
+    public static MySqlConnection Connection()
     {
-        public static MySqlConnection Connection()
-        {
-            MySqlConnection conn = new MySqlConnection(DBConfiguration.ConnectionString);
-            return conn;
-        }
+      MySqlConnection conn = new MySqlConnection(DBConfiguration.ConnectionString);
+      return conn;
     }
+  }
 }

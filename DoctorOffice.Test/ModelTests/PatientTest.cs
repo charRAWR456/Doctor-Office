@@ -52,76 +52,76 @@ namespace DoctorOffice.Tests
       CollectionAssert.AreEqual(testList, result);
     }
     [TestMethod]
-        public void Save_AssignsIdToObject_id()
-        {
-          //Arrange
-          Patient testPatient = new Patient("Joanne", "02/24/1970");
-          testPatient.Save();
+    public void Save_AssignsIdToObject_id()
+    {
+      //Arrange
+      Patient testPatient = new Patient("Joanne", "02/24/1970");
+      testPatient.Save();
 
-          //Act
-          Patient savedPatient = Patient.GetAll()[0];
+      //Act
+      Patient savedPatient = Patient.GetAll()[0];
 
-          int result = savedPatient.GetId();
-          int testId = testPatient.GetId();
+      int result = savedPatient.GetId();
+      int testId = testPatient.GetId();
 
-          //Assert
-          Assert.AreEqual(testId, result);
-        }
+      //Assert
+      Assert.AreEqual(testId, result);
+    }
     [TestMethod]
     public void Delete_DeletesPatientAssociationsFromDatabase_PatientList()
-   {
-     //Arrange
-     Doctor testDoctor = new Doctor("Joey");
-     testDoctor.Save();
+    {
+      //Arrange
+      Doctor testDoctor = new Doctor("Joey");
+      testDoctor.Save();
 
-     string testName = "Jerry";
-     string testBirthDate = "01/01/1900";
-     Patient testPatient = new Patient(testName, testBirthDate);
-     testPatient.Save();
+      string testName = "Jerry";
+      string testBirthDate = "01/01/1900";
+      Patient testPatient = new Patient(testName, testBirthDate);
+      testPatient.Save();
 
-     //Act
-     testPatient.AddDoctor(testDoctor);
-     testPatient.Delete();
+      //Act
+      testPatient.AddDoctor(testDoctor);
+      testPatient.Delete();
 
-     List<Patient> resultDoctorPatients = testDoctor.GetPatients();
-     List<Patient> testDoctorPatients = new List<Patient> {};
+      List<Patient> resultDoctorPatients = testDoctor.GetPatients();
+      List<Patient> testDoctorPatients = new List<Patient> {};
 
-     //Assert
-     CollectionAssert.AreEqual(testDoctorPatients, resultDoctorPatients);
-   }
-   [TestMethod]
-      public void Find_FindsPatientInDatabase_Patient()
-      {
-        //Arrange
-        Patient testPatient = new Patient("Jenny", "05/30/1967");
-        testPatient.Save();
+      //Assert
+      CollectionAssert.AreEqual(testDoctorPatients, resultDoctorPatients);
+    }
+    [TestMethod]
+    public void Find_FindsPatientInDatabase_Patient()
+    {
+      //Arrange
+      Patient testPatient = new Patient("Jenny", "05/30/1967");
+      testPatient.Save();
 
-        //Act
-        Patient result = Patient.Find(testPatient.GetId());
+      //Act
+      Patient result = Patient.Find(testPatient.GetId());
 
-        //Assert
-        Assert.AreEqual(testPatient, result);
-      }
-      [TestMethod]
-          public void AddDoctor_AddsDoctorToPatient_DoctorList()
-          {
-            //Arrange
-            Patient testPatient = new Patient("Sam", "9/24/1990");
-            testPatient.Save();
+      //Assert
+      Assert.AreEqual(testPatient, result);
+    }
+    [TestMethod]
+    public void AddDoctor_AddsDoctorToPatient_DoctorList()
+    {
+      //Arrange
+      Patient testPatient = new Patient("Sam", "9/24/1990");
+      testPatient.Save();
 
-            Doctor testDoctor = new Doctor("Howard");
-            testDoctor.Save();
+      Doctor testDoctor = new Doctor("Howard");
+      testDoctor.Save();
 
-            //Act
-            testPatient.AddDoctor(testDoctor);
+      //Act
+      testPatient.AddDoctor(testDoctor);
 
-            List<Doctor> result = testPatient.GetDoctors();
-            List<Doctor> testList = new List<Doctor>{testDoctor};
+      List<Doctor> result = testPatient.GetDoctors();
+      List<Doctor> testList = new List<Doctor>{testDoctor};
 
-            //Assert
-            CollectionAssert.AreEqual(testList, result);
-          }
-          [TestMethod]
+      //Assert
+      CollectionAssert.AreEqual(testList, result);
+    }
+    [TestMethod]
     public void GetDoctors_ReturnsAllPatientDoctors_DoctorList()
     {
       //Arrange

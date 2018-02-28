@@ -5,19 +5,20 @@ using DoctorOffice.Models;
 
 namespace DoctorOffice.Controllers
 {
-    public class HomeController : Controller
+  
+  public class HomeController : Controller
+  {
+
+    [HttpGet("/")]
+    public ActionResult Index()
     {
-
-        [HttpGet("/")]
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpGet("/Home/Success")]
-        public ActionResult Success()
-        {
-            return View();
-        }
+      return View();
     }
+
+    [HttpGet("/Home/Success")]
+    public ActionResult Success()
+    {
+      return View();
+    }
+  }
 }

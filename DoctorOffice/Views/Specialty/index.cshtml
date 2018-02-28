@@ -1,20 +1,21 @@
 @{
   Layout = "_Layout";
 }
-
+<title>Specialty index</title>
 <div class="container">
-<h1>Doctor Office</h1>
-<hr />
-<h2>Specialties:</h2>
-@if (Model.Count != 0)
-{
-  <ul>
+  <h1>Doctor Office</h1>
+  <h1>Specialty index</h1>
+  <hr />
+  <h2>Specialties:</h2>
+  @if (Model.Count != 0)
+  {
+    <ul>
     @foreach (var specialty in Model)
     {
       <li><a href='/specialtys/@specialty.GetId()'>@specialty.GetDescription()</a>        <br> <a href="/specialtys/@specialty.GetId()/update">Edit</a> | <a method="post" href="/specialtys/@specialty.GetId()/delete">Delete</a></li>
     }
-  </ul>
-}
-<h4><a href="/specialtys/new">Add new Specialty</a></h4>
-<h4><a href="/">Return Home</a></h4>
+    </ul>
+  }
+  <h4><a href="/specialtys/new">Add new Specialty</a></h4>
+  <h4><a href="/">Return Home</a></h4>
 </div>

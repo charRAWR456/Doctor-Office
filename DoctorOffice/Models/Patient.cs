@@ -16,6 +16,7 @@ namespace DoctorOffice.Models
       _id = id;
       _birth_date = birth_date;
     }
+    
     public override bool Equals(System.Object otherPatient)
     {
       if (!(otherPatient is Patient))
@@ -28,22 +29,27 @@ namespace DoctorOffice.Models
         return this.GetId().Equals(newPatient.GetId());
       }
     }
+
     public override int GetHashCode()
     {
       return this.GetId().GetHashCode();
     }
+
     public string GetName()
     {
       return _name;
     }
+
     public int GetId()
     {
       return _id;
     }
+
     public string GetBirthDate()
     {
       return _birth_date;
     }
+
     public static List<Patient> GetAll()
     {
       List<Patient> allPatients = new List<Patient>{};
@@ -67,6 +73,7 @@ namespace DoctorOffice.Models
       }
       return allPatients;
     }
+
     public void Save()
     {
       MySqlConnection conn = DB.Connection();
@@ -94,6 +101,7 @@ namespace DoctorOffice.Models
         conn.Dispose();
       }
     }
+
     public static void DeleteAll()
     {
       MySqlConnection conn = DB.Connection();
@@ -107,57 +115,59 @@ namespace DoctorOffice.Models
         conn.Dispose();
       }
     }
+
     public List<Doctor> GetDoctors()
     {
-    MySqlConnection conn = DB.Connection();
-        conn.Open();
-        var cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"SELECT doctor_id FROM doctors_patients WHERE patient_id = @patientId;";
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT doctor_id FROM doctors_patients WHERE patient_id = @patientId;";
 
-        MySqlParameter patientIdParameter = new MySqlParameter();
-        patientIdParameter.ParameterName = "@patientId";
-        patientIdParameter.Value = _id;
-        cmd.Parameters.Add(patientIdParameter);
+      MySqlParameter patientIdParameter = new MySqlParameter();
+      patientIdParameter.ParameterName = "@patientId";
+      patientIdParameter.Value = _id;
+      cmd.Parameters.Add(patientIdParameter);
 
-        var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
 
-        List<int> doctorIds = new List<int> {};
-        while(rdr.Read())
+      List<int> doctorIds = new List<int> {};
+      while(rdr.Read())
+      {
+        int doctorId = rdr.GetInt32(0);
+        doctorIds.Add(doctorId);
+      }
+      rdr.Dispose();
+
+      List<Doctor> doctors = new List<Doctor> {};
+      foreach (int doctorId in doctorIds)
+      {
+        var doctorQuery = conn.CreateCommand() as MySqlCommand;
+        doctorQuery.CommandText = @"SELECT * FROM doctors WHERE id = @DoctorId;";
+
+        MySqlParameter doctorIdParameter = new MySqlParameter();
+        doctorIdParameter.ParameterName = "@DoctorId";
+        doctorIdParameter.Value = doctorId;
+        doctorQuery.Parameters.Add(doctorIdParameter);
+
+        var doctorQueryRdr = doctorQuery.ExecuteReader() as MySqlDataReader;
+        while(doctorQueryRdr.Read())
         {
-          int doctorId = rdr.GetInt32(0);
-          doctorIds.Add(doctorId);
+          int thisDoctorId = doctorQueryRdr.GetInt32(0);
+          string doctorName = doctorQueryRdr.GetString(1);
+
+          Doctor foundDoctor = new Doctor(doctorName, thisDoctorId);
+          doctors.Add(foundDoctor);
         }
-        rdr.Dispose();
-
-        List<Doctor> doctors = new List<Doctor> {};
-        foreach (int doctorId in doctorIds)
-        {
-          var doctorQuery = conn.CreateCommand() as MySqlCommand;
-          doctorQuery.CommandText = @"SELECT * FROM doctors WHERE id = @DoctorId;";
-
-          MySqlParameter doctorIdParameter = new MySqlParameter();
-          doctorIdParameter.ParameterName = "@DoctorId";
-          doctorIdParameter.Value = doctorId;
-          doctorQuery.Parameters.Add(doctorIdParameter);
-
-          var doctorQueryRdr = doctorQuery.ExecuteReader() as MySqlDataReader;
-          while(doctorQueryRdr.Read())
-          {
-            int thisDoctorId = doctorQueryRdr.GetInt32(0);
-            string doctorName = doctorQueryRdr.GetString(1);
-
-            Doctor foundDoctor = new Doctor(doctorName, thisDoctorId);
-            doctors.Add(foundDoctor);
-          }
-          doctorQueryRdr.Dispose();
-        }
-        conn.Close();
-        if (conn != null)
-        {
-          conn.Dispose();
-        }
-        return doctors;
+        doctorQueryRdr.Dispose();
+      }
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return doctors;
     }
+
     public void AddDoctor(Doctor newDoctor)
     {
       MySqlConnection conn = DB.Connection();
@@ -182,6 +192,7 @@ namespace DoctorOffice.Models
         conn.Dispose();
       }
     }
+
     public void Delete()
     {
       MySqlConnection conn = DB.Connection();
@@ -200,6 +211,7 @@ namespace DoctorOffice.Models
         conn.Close();
       }
     }
+
     public static Patient Find(int id)
     {
       MySqlConnection conn = DB.Connection();
@@ -233,6 +245,7 @@ namespace DoctorOffice.Models
 
       return newPatient;
     }
+
     public void Edit(string newName, string newBirthDate)
     {
       MySqlConnection conn = DB.Connection();
@@ -240,7 +253,7 @@ namespace DoctorOffice.Models
       var cmd = conn.CreateCommand() as MySqlCommand;
       cmd.CommandText = @"UPDATE patients SET name = @newName, birth_date =  @newBirthDate WHERE id = @searchId;";
 
-// this is not correct, but why?
+      // this is not correct, but why?
 
       // @"UPDATE patients SET (name, birth_date) = (@newName, @newBirthDate) WHERE id = @searchId;";
 
@@ -268,7 +281,6 @@ namespace DoctorOffice.Models
       {
         conn.Dispose();
       }
-
     }
   }
 }
