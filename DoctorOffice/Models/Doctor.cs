@@ -255,7 +255,7 @@ namespace DoctorOffice.Models
       }
       return newDoctor;
     }
-    public void UpdateDoctor(string newDoctor)
+    public void Edit(string newDoctor)
 {
   MySqlConnection conn = DB.Connection();
   conn.Open();
