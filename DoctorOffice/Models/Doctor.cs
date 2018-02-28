@@ -255,5 +255,31 @@ namespace DoctorOffice.Models
       }
       return newDoctor;
     }
+    public void UpdateDoctor(string newDoctor)
+{
+  MySqlConnection conn = DB.Connection();
+  conn.Open();
+  var cmd = conn.CreateCommand() as MySqlCommand;
+  cmd.CommandText = @"UPDATE doctors SET name = @newDoctor WHERE id = @searchId;";
+
+  MySqlParameter searchId = new MySqlParameter();
+  searchId.ParameterName = "@searchId";
+  searchId.Value = _id;
+  cmd.Parameters.Add(searchId);
+
+  MySqlParameter name = new MySqlParameter();
+  name.ParameterName = "@newDoctor";
+  name.Value = newDoctor;
+  cmd.Parameters.Add(name);
+
+  cmd.ExecuteNonQuery();
+  _name = newDoctor;
+  conn.Close();
+  if (conn != null)
+  {
+    conn.Dispose();
+  }
+
+}
   }
 }

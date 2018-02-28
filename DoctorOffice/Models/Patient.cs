@@ -145,7 +145,7 @@ namespace DoctorOffice.Models
           {
             int thisDoctorId = doctorQueryRdr.GetInt32(0);
             string doctorName = doctorQueryRdr.GetString(1);
-            
+
             Doctor foundDoctor = new Doctor(doctorName, thisDoctorId);
             doctors.Add(foundDoctor);
           }
@@ -160,6 +160,27 @@ namespace DoctorOffice.Models
     }
     public void AddDoctor(Doctor newDoctor)
     {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"INSERT INTO doctors_patients (doctor_id, patient_id) VALUES (@DoctorId, @PatientId);";
+
+      MySqlParameter doctor_id = new MySqlParameter();
+      doctor_id.ParameterName = "@DoctorId";
+      doctor_id.Value = newDoctor.GetId();
+      cmd.Parameters.Add(doctor_id);
+
+      MySqlParameter patient_id = new MySqlParameter();
+      patient_id.ParameterName = "@PatientId";
+      patient_id.Value = _id;
+      cmd.Parameters.Add(patient_id);
+
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
     }
     public void Delete()
     {
@@ -211,6 +232,33 @@ namespace DoctorOffice.Models
       }
 
       return newPatient;
+    }
+    public void UpdateName(string newName)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"UPDATE patients SET name = @newName WHERE id = @searchId;";
+
+      MySqlParameter searchId = new MySqlParameter();
+      searchId.ParameterName = "@searchId";
+      searchId.Value = _id;
+      cmd.Parameters.Add(searchId);
+
+      MySqlParameter name = new MySqlParameter();
+      name.ParameterName = "@newName";
+      name.Value = newName;
+      cmd.Parameters.Add(name);
+
+      cmd.ExecuteNonQuery();
+      _name = newName;
+      
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+
     }
   }
 }

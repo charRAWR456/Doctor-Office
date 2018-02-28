@@ -52,6 +52,22 @@ namespace DoctorOffice.Tests
       CollectionAssert.AreEqual(testList, result);
     }
     [TestMethod]
+        public void Save_AssignsIdToObject_id()
+        {
+          //Arrange
+          Patient testPatient = new Patient("Joanne", "02/24/1970");
+          testPatient.Save();
+
+          //Act
+          Patient savedPatient = Patient.GetAll()[0];
+
+          int result = savedPatient.GetId();
+          int testId = testPatient.GetId();
+
+          //Assert
+          Assert.AreEqual(testId, result);
+        }
+    [TestMethod]
     public void Delete_DeletesPatientAssociationsFromDatabase_PatientList()
    {
      //Arrange
@@ -86,6 +102,45 @@ namespace DoctorOffice.Tests
         //Assert
         Assert.AreEqual(testPatient, result);
       }
+      [TestMethod]
+          public void AddDoctor_AddsDoctorToPatient_DoctorList()
+          {
+            //Arrange
+            Patient testPatient = new Patient("Sam", "9/24/1990");
+            testPatient.Save();
 
+            Doctor testDoctor = new Doctor("Howard");
+            testDoctor.Save();
+
+            //Act
+            testPatient.AddDoctor(testDoctor);
+
+            List<Doctor> result = testPatient.GetDoctors();
+            List<Doctor> testList = new List<Doctor>{testDoctor};
+
+            //Assert
+            CollectionAssert.AreEqual(testList, result);
+          }
+          [TestMethod]
+    public void GetDoctors_ReturnsAllPatientDoctors_DoctorList()
+    {
+      //Arrange
+      Patient testPatient = new Patient("Sandy", "07/18/1987");
+      testPatient.Save();
+
+      Doctor testDoctor1 = new Doctor("Phillip");
+      testDoctor1.Save();
+
+      Doctor testDoctor2 = new Doctor("Zachary");
+      testDoctor2.Save();
+
+      //Act
+      testPatient.AddDoctor(testDoctor1);
+      List<Doctor> result = testPatient.GetDoctors();
+      List<Doctor> testList = new List<Doctor> {testDoctor1};
+
+      //Assert
+      CollectionAssert.AreEqual(testList, result);
+    }
   }
 }

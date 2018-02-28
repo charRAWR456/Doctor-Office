@@ -74,6 +74,37 @@ namespace DoctorOffice.Models
       }
       return allSpecialtys;
     }
+    public static Specialty Find(int id)
+  {
+    MySqlConnection conn = DB.Connection();
+    conn.Open();
+    var cmd = conn.CreateCommand() as MySqlCommand;
+    cmd.CommandText = @"SELECT * FROM specialties WHERE id = (@searchId);";
+
+    MySqlParameter searchId = new MySqlParameter();
+    searchId.ParameterName = "@searchId";
+    searchId.Value = id;
+    cmd.Parameters.Add(searchId);
+
+    var rdr = cmd.ExecuteReader() as MySqlDataReader;
+    int specialtyId = 0;
+    string specialtyName = "";
+
+    while(rdr.Read())
+    {
+      specialtyId = rdr.GetInt32(0);
+      specialtyName = rdr.GetString(1);
+    }
+
+    Specialty newSpecialty = new Specialty(specialtyName, specialtyId);
+    conn.Close();
+    if (conn != null)
+    {
+      conn.Dispose();
+    }
+
+    return newSpecialty;
+  }
     public void Save()
     {
       MySqlConnection conn = DB.Connection();
@@ -149,6 +180,27 @@ namespace DoctorOffice.Models
     }
     public void AddDoctor(Doctor newDoctor)
     {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"INSERT INTO doctors_specialties (doctor_id, specialty_id) VALUES (@DoctorId, @SpecialtyId);";
+
+      MySqlParameter doctor_id = new MySqlParameter();
+      doctor_id.ParameterName = "@DoctorId";
+      doctor_id.Value = newDoctor.GetId();
+      cmd.Parameters.Add(doctor_id);
+
+      MySqlParameter specialty_id = new MySqlParameter();
+      specialty_id.ParameterName = "@SpecialtyId";
+      specialty_id.Value = _id;
+      cmd.Parameters.Add(specialty_id);
+
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
     }
     public void Delete()
     {
@@ -167,6 +219,32 @@ namespace DoctorOffice.Models
       {
         conn.Close();
       }
+    }
+    public void UpdateDescription(string newDescription)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"UPDATE specialties SET description = @newDescription WHERE id = @searchId;";
+
+      MySqlParameter searchId = new MySqlParameter();
+      searchId.ParameterName = "@searchId";
+      searchId.Value = _id;
+      cmd.Parameters.Add(searchId);
+
+      MySqlParameter description = new MySqlParameter();
+      description.ParameterName = "@newDescription";
+      description.Value = newDescription;
+      cmd.Parameters.Add(description);
+
+      cmd.ExecuteNonQuery();
+      _description = newDescription;
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+
     }
   }
 }

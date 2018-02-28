@@ -5,25 +5,25 @@ using DoctorOffice.Models;
 
 namespace DoctorOffice.Controllers
 {
-    public class PatientController : Controller
+    public class SpecialtyController : Controller
     {
 
-        [HttpGet("/patients")]
+        [HttpGet("/specialtys")]
         public ActionResult Index()
         {
-          List<Patient> allPatients = Patient.GetAll();
-        return View(allPatients);
+          List<Specialty> allSpecialtys = Specialty.GetAll();
+        return View(allSpecialtys);
         }
-        [HttpGet("/patients/new")]
+        [HttpGet("/specialtys/new")]
         public ActionResult CreateForm()
         {
           return View();
         }
-        [HttpPost("/patients")]
+        [HttpPost("/specialtys")]
         public ActionResult Create()
         {
-          Patient newPatient = new Patient(Request.Form["patient-name"], Request.Form["patient-birthdate"]);
-          newPatient.Save();
+          Specialty newSpecialty = new Specialty(Request.Form["specialty-description"]);
+          newSpecialty.Save();
           return RedirectToAction("Success", "Home");
         }
     }
