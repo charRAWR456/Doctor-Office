@@ -28,7 +28,7 @@ namespace DoctorOffice.Tests
       Assert.AreEqual(0, result);
     }
     [TestMethod]
-    public void GetNameAndSpecialty_ReturnsTrueForSameNameAndSpecialty_Doctor()
+    public void GetName_ReturnsTrueForSameNameAndSpecialty_Doctor()
     {
       //Arrange, Act
       Doctor firstDoctor = new Doctor("Sam");
@@ -72,22 +72,6 @@ namespace DoctorOffice.Tests
       //Assert
       CollectionAssert.AreEqual(testPatientDoctors, resultPatientDoctors);
     }
-    // [TestMethod]
-    // public void DuplicateSpecialty_DoctorSameSpecialty_DoctorList()
-    // {
-    //   //Arrange
-    //   Doctor doctorOne = new Doctor("Brad");
-    //   doctorOne.Save();
-    //   Doctor doctorTwo = new Doctor("Sally");
-    //   doctorTwo.Save();
-
-      //Act
-    //   List<Doctor> result = Doctor.GetAll();
-    //   List<Doctor> testList = new List<Doctor>{doctorOne, doctorTwo};
-    //
-    //   //Assert
-    //   CollectionAssert.AreEqual(testList, result);
-    // }
     [TestMethod]
     public void Find_FindsDoctorInDatabase_Doctor()
     {
@@ -101,28 +85,45 @@ namespace DoctorOffice.Tests
       //Assert
       Assert.AreEqual(testDoctor, foundDoctor);
     }
-  //   [TestMethod]
-  //  public void Test_FindSpecialty_Doctor()
-  //  {
-  //    //Arrange
-  //    Doctor testDoctor = new Doctor("Sam", List<>);
-  //    testDoctor.Save();
-   //
-  //    Specialty testSpecialty = new Specialty("Mow the lawn");
-  //    testSpecialty.Save();
-   //
-  //    Specialty testSpecialty2 = new Specialty("Water the garden");
-  //    testSpecialty2.Save();
-   //
-  //    //Act
-  //    testDoctor.AddSpecialty(testSpecialty);
-  //    testDoctor.AddSpecialty(testSpecialty2);
-   //
-  //    List<Patient> result = testDoctor.GetPatients();
-  //    List<Patient> testList = new List<Patient>{testPatient, testPatient2};
-   //
-  //    //Assert
-  //    CollectionAssert.AreEqual(testList, result);
-  //  }
+    public void GetPatients_ReturnsAllDoctorPatients_PatientList()
+    {
+      //Arrange
+      Doctor testDoctor = new Doctor("Joe");
+      testDoctor.Save();
+
+      Patient testPatient1 = new Patient("Sally", "3/30/1990");
+      testPatient1.Save();
+
+      Patient testPatient2 = new Patient("Molly", "9/10/2011");
+      testPatient2.Save();
+
+      //Act
+      testDoctor.AddPatient(testPatient1);
+      List<Patient> savedPatients = testDoctor.GetPatients();
+      List<Patient> testList = new List<Patient> {testPatient1};
+
+      //Assert
+      CollectionAssert.AreEqual(testList, savedPatients);
+    }
+    public void GetSpecialtys_ReturnsAllDoctorSpecialtys_SpecialtyList()
+    {
+      //Arrange
+      Doctor testDoctor = new Doctor("Joe");
+      testDoctor.Save();
+
+      Specialty testSpecialty1 = new Specialty("Phycologist");
+      testSpecialty1.Save();
+
+      Specialty testSpecialty2 = new Specialty("Eye");
+      testSpecialty2.Save();
+
+      //Act
+      testDoctor.AddSpecialty(testSpecialty1);
+      List<Specialty> savedSpecialtys = testDoctor.GetSpecialtys();
+      List<Specialty> testList = new List<Specialty> {testSpecialty1};
+
+      //Assert
+      CollectionAssert.AreEqual(testList, savedSpecialtys);
+    }
   }
 }

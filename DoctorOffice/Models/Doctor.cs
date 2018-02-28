@@ -130,7 +130,27 @@ namespace DoctorOffice.Models
     }
     public void AddPatient(Patient newPatient)
     {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"INSERT INTO doctors_patients (doctor_id, patient_id) VALUES (@DoctorId, @PatientId);";
 
+      MySqlParameter doctor_id = new MySqlParameter();
+      doctor_id.ParameterName = "@DoctorId";
+      doctor_id.Value = _id;
+      cmd.Parameters.Add(doctor_id);
+
+      MySqlParameter patient_id = new MySqlParameter();
+      patient_id.ParameterName = "@PatientId";
+      patient_id.Value = newPatient.GetId();
+      cmd.Parameters.Add(patient_id);
+
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if (conn != null)
+      {
+          conn.Dispose();
+      }
     }
     public List<Specialty> GetSpecialtys()
     {
@@ -166,7 +186,27 @@ namespace DoctorOffice.Models
     }
     public void AddSpecialty(Specialty newSpecialty)
     {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"INSERT INTO doctors_specialties (doctor_id, specialty_id) VALUES (@DoctorId, @SpecialtyId);";
 
+      MySqlParameter doctor_id = new MySqlParameter();
+      doctor_id.ParameterName = "@DoctorId";
+      doctor_id.Value = _id;
+      cmd.Parameters.Add(doctor_id);
+
+      MySqlParameter specialty_id = new MySqlParameter();
+      specialty_id.ParameterName = "@SpecialtyId";
+      specialty_id.Value = newSpecialty.GetId();
+      cmd.Parameters.Add(specialty_id);
+
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if (conn != null)
+      {
+          conn.Dispose();
+      }
     }
     public void Delete()
     {
