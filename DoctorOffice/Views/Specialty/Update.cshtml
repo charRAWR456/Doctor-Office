@@ -1,0 +1,15 @@
+@{
+  Layout = "_Layout";
+}
+
+<div class="container">
+<h1>Doctor Office</h1>
+<hr />
+<h2>Edit Specialty: @Model.GetDescription()</h2>
+<form action="/specialtys/@Model.GetId()/update" method="post">
+    <label for="description">Name:</label>
+    <input type="text" name="description" value="@Model.GetDescription()">
+    <button type="submit">Update</button>
+</form>
+<h4><a href="/specialtys">Return home</a></h4>
+</div>

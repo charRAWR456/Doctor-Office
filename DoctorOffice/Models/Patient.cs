@@ -233,12 +233,16 @@ namespace DoctorOffice.Models
 
       return newPatient;
     }
-    public void UpdateName(string newName)
+    public void Edit(string newName, string newBirthDate)
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"UPDATE patients SET name = @newName WHERE id = @searchId;";
+      cmd.CommandText = @"UPDATE patients SET name = @newName, birth_date =  @newBirthDate WHERE id = @searchId;";
+
+// this is not correct, but why?
+
+      // @"UPDATE patients SET (name, birth_date) = (@newName, @newBirthDate) WHERE id = @searchId;";
 
       MySqlParameter searchId = new MySqlParameter();
       searchId.ParameterName = "@searchId";
@@ -250,9 +254,15 @@ namespace DoctorOffice.Models
       name.Value = newName;
       cmd.Parameters.Add(name);
 
+      MySqlParameter birthDate = new MySqlParameter();
+      birthDate.ParameterName = "@newBirthDate";
+      birthDate.Value = newBirthDate;
+      cmd.Parameters.Add(birthDate);
+
       cmd.ExecuteNonQuery();
       _name = newName;
-      
+      _birth_date = newBirthDate;
+
       conn.Close();
       if (conn != null)
       {

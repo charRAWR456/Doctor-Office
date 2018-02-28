@@ -13,7 +13,7 @@
   <ul>
     @foreach (var patient in @Model["doctorPatients"])
     {
-      <li>@patient.GetName() | @patient.GetBirthDate()</li>
+      <li>@patient.GetName() | @patient.GetBirthDate()<a href="/patients/@patient.GetId()/update">Edit</a> | <a method="post" href="/patients/@patient.GetId()/delete">Delete</a></li>
     }
   </ul>
 }
@@ -28,5 +28,6 @@
   </select>
   <button type='submit'>Add</button>
 </form>
+<a href='/patients/new'>Add patient</a>
 <p><a href="/">Return to Main Page</a></p>
 </div>

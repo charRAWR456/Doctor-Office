@@ -220,7 +220,7 @@ namespace DoctorOffice.Models
         conn.Close();
       }
     }
-    public void UpdateDescription(string newDescription)
+    public void Edit(string newDescription)
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
