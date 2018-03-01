@@ -3,7 +3,6 @@
   Layout = "_Layout";
 }
 <title>Doctor Details</title>
-
 <div class="container">
   <h1>Doctor: @Model["doctor"].GetName()</h1>
   <h5 class="text-muted"><em>Add existing patient to Specialty or Add a new patient</em></h5>
@@ -14,18 +13,17 @@
     <h4><a class="add-new btn-info col-4" href='/patients/new/'>Add a new patient</a></h4>
     <h3 class="col-4 or">-or-</h3>
 
-    <form action='/doctors/@Model["doctor"].GetId()/patients/new' method='post'>
-    <label for='patient-id'>Select a patient</label>
+    <form action='/doctors/@Model["doctor"].GetId()/patients/new' class="col-4" method='post'>
+    <label for='patient-id'><strong>Select a patient</strong></label>
     <select id='patient-id' name='patient-id' type='text'>
     @foreach (var patient in @Model["allPatients"])
     {
       <option value='@patient.GetId()'>@patient.GetName()</option>
     }
     </select>
-    <button type='submit'>Add</button>
+    <button type='submit' class="btn-info">Add</button>
     </form>
     </div>
-
     <hr>
     <h4>Current Patients:</h4>
     <ul>
@@ -36,5 +34,4 @@
     </ul>
   }
   <hr>
-
 </div>

@@ -7,25 +7,25 @@
   <h1>Specialty: @Model["specialty"].GetDescription()</h1>
   <h5 class="text-muted"><em>Add existing doctor to Specialty or Add a new doctor</em></h5>
   <hr />
+  <div class="row">
+  <h4><a class="add-new btn-info col-4" href='/doctors/new/@Model["specialty"].GetId()'>Add a new doctor</a></h4>
+  <h3 class="col-4 or">-or-</h3>
+
+  <form action='/specialtys/@Model["specialty"].GetId()/doctors/new' class="col-4" method='post'>
+  <label for='doctor-id'><strong>Select a doctor</strong></label>
+  <select id='doctor-id' name='doctor-id' type='text'>
+  @foreach (var doctor in @Model["allDoctors"])
+  {
+    <option value='@doctor.GetId()'>@doctor.GetName()</option>
+  }
+  </select>
+  <button type='submit' class="btn-info">Add</button>
+  </form>
+  </div>
   @if (@Model["specialtyDoctors"].Count != 0)
   {
-    <div class="row">
-    <h4><a class="add-new btn-info col-4" href='/doctors/new/@Model["specialty"].GetId()'>Add a new doctor</a></h4>
-    <h3 class="col-4 or">-or-</h3>
 
-    <form action='/specialtys/@Model["specialty"].GetId()/doctors/new' class="col-4" method='post'>
-    <label for='doctor-id'><strong>Select a doctor</strong></label>
-    <select id='doctor-id' name='doctor-id' type='text'>
-    @foreach (var doctor in @Model["allDoctors"])
-    {
-      <option value='@doctor.GetId()'>@doctor.GetName()</option>
-    }
-    </select>
-    <button type='submit' class="btn-info">Add</button>
-    </form>
-    </div>
     <hr>
-
     <h4>Current Doctors:</h4>
     <ul>
     @foreach (Doctor doctor in @Model["specialtyDoctors"])
