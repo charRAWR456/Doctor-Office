@@ -1,17 +1,15 @@
 @{
   Layout = "_Layout";
 }
-<title>CreateForm</title>
+<title>Doctor Create Form</title>
 <div class="container">
-  <h1>Doctor Office</h1>
-  <h1>Create Form</h1>
-  <h2>Add new doctor</h2>
+  <h1>Add New Doctor</h1>
+    <h5 class="text-muted"><em>Only if it does not already exist</em></h5>
   <hr />
   <form action="/doctors/@Model" method="post">
     <label for="doctor-name">Doctor name:</label>
     <input id="doctor-name" name="doctor-name" type="text">
 
-    <button type="submit">Add</button>
+    <button type="submit" class="btn-info">Add Doctor</button>
   </form>
-  <h4><a href="/">Return home</a></h4>
 </div>

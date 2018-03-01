@@ -3,16 +3,14 @@
 }
 <title>Patient update</title>
 <div class="container">
-  <h1>Doctor Office</h1>
-  <title>Patient update</title>
+  <h1>Update Patient: @Model.GetName()</h1>
+  <h5 class="text-muted"><em>Be sure you select "update patient" to save your changes</em></h5>
   <hr />
-  <h2>Edit Patient: @Model.GetName()</h2>
   <form action="/patients/@Model.GetId()/update" method="post">
-    <label for="name">Name:</label>
+    <label for="name">Update:</label>
     <input type="text" name="newname" value="@Model.GetName()">
     <label for="birthdate">Birthdate:</label>
     <input type="date" name="birthdate" value="@Model.GetBirthDate()">
-    <button type="submit">Update</button>
+    <button type="submit" class="btn-info">Update Patient</button>
   </form>
-  <h4><a href="/patients">Return home</a></h4>
 </div>

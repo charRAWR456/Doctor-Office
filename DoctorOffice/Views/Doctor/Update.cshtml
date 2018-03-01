@@ -3,14 +3,13 @@
 }
 <title>Doctor Update</title>
 <div class="container">
-  <h1>Doctor Office</h1>
-  <h1>Doctor Update</h1>
+  <h1>Update Doctor: @Model.GetName()</h1>
+  <h5 class="text-muted"><em>Be sure you select "update doctor" to save your changes</em></h5>
   <hr />
-  <h2>Edit doctor: @Model.GetName()</h2>
   <form action="/doctors/@Model.GetId()/update" method="post">
-    <label for="name">Name:</label>
+    <label for="name">Update:</label>
     <input type="text" name="newname" value="@Model.GetName()">
-    <button type="submit">Update</button>
+    <button type="submit" class="btn-info">Update Doctor</button>
   </form>
-  <h4><a href="/doctors">Return home</a></h4>
+
 </div>

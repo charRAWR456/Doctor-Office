@@ -5,31 +5,35 @@
 <title>Doctor Details</title>
 
 <div class="container">
-  <h1>Doctor office</h1>
-  <h1>Doctor Details</h1>
-  <h2>Doctor: @Model["doctor"].GetName()</h2>
+  <h1>Doctor: @Model["doctor"].GetName()</h1>
+  <h5 class="text-muted"><em>Add existing patient to Specialty or Add a new patient</em></h5>
   <hr />
   @if (@Model["doctorPatients"].Count != 0)
   {
-    <h4>Here are all the patients that see this Doctor:</h4>
+<div class="row">
+    <h4><a class="add-new btn-info col-4" href='/patients/new/'>Add a new patient</a></h4>
+    <h3 class="col-4 or">-or-</h3>
+
+    <form action='/doctors/@Model["doctor"].GetId()/patients/new' method='post'>
+      <label for='patient-id'>Select a patient</label>
+      <select id='patient-id' name='patient-id' type='text'>
+        @foreach (var patient in @Model["allPatients"])
+        {
+          <option value='@patient.GetId()'>@patient.GetName()</option>
+        }
+      </select>
+      <button type='submit'>Add</button>
+    </form>
+</div>
+
+<hr>
+    <h4>Current Patients:</h4>
     <ul>
     @foreach (var patient in @Model["doctorPatients"])
     {
-      <li>@patient.GetName() | @patient.GetBirthDate()<a href="/patients/@patient.GetId()/update">Edit</a> | <a method="post" href="/patients/@patient.GetId()/delete">Delete</a></li>
+      <li><span class="bullet">@patient.GetName() </span>|<span class="text-muted"> @patient.GetBirthDate()</span><br><a class="btn-info edit-delete" href="/patients/@patient.GetId()/update">Edit</a> | <a class="btn-info edit-delete" method="post" href="/patients/@patient.GetId()/delete">Delete</a></li>
     }
     </ul>
   }
-  <h4>Add a patient to this doctor:</h4>
-  <form action='/doctors/@Model["doctor"].GetId()/patients/new' method='post'>
-    <label for='patient-id'>Select a patient</label>
-    <select id='patient-id' name='patient-id' type='text'>
-      @foreach (var patient in @Model["allPatients"])
-      {
-        <option value='@patient.GetId()'>@patient.GetName()</option>
-      }
-    </select>
-    <button type='submit'>Add</button>
-  </form>
-  <a href='/patients/new'>Add patient</a>
-  <p><a href="/">Return to Main Page</a></p>
+
 </div>

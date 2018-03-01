@@ -3,15 +3,15 @@
 }
 <title>Patient Create Form</title>
 <div class="container">
-  <h1>Patient Create Form</h1>
-  <h1>Add a new patient</h1>
+  <h1>Add a New Patient</h1>
+  <h5 class="text-muted"><em>Only if it does not already exist</em></h5>
+  <hr>
   <form action="/patients" method="post">
-    <label for="patient-name">Patient name:</label>
-    <input id="patient-name" name="patient-name" type="text">
-    <label for="patient-birthdate">Patient Birth Date:</label>
+    <label for="patient-name">New Patient:</label>
+    <input id="patient-name" name="patient-name" type="text" placeholder="Name">
+    <label for="patient-birthdate">Birth Date:</label>
     <input id="patient-birthdate" name="patient-birthdate" type="date">
-    <button type="submit">Add new patient</button>
+    <button type="submit" class="btn-info">Add new patient</button>
   </form>
-  <p><a href="/">Back home</a></p>
-  <p><a href="/patients">View all patients</a></p>
+
 </div>
