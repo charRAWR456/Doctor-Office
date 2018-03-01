@@ -5,6 +5,10 @@ body{
   background: url("../img/paint.jpeg");
 }
 
+h1{
+  text-shadow: 2px 2px teal;
+}
+
 h2{
   font-style: italic;
   color: #243830;
