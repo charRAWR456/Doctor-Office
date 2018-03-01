@@ -11,14 +11,14 @@
   {
     <h4>Add a doctor to this patient:</h4>
     <form action='/patients/@Model["patient"].GetId()/doctors/new' method='post'>
-      <label for='doctor-id'>Select a doctor</label>
-      <select id='doctor-id' name='doctor-id' type='text'>
-        @foreach (var doctor in @Model["allDoctors"])
-        {
-          <option value='@doctor.GetId()'>@doctor.GetName()</option>
-        }
-      </select>
-      <button type='submit' class="btn-info">Add</button>
+    <label for='doctor-id'>Select a doctor</label>
+    <select id='doctor-id' name='doctor-id' type='text'>
+    @foreach (var doctor in @Model["allDoctors"])
+    {
+      <option value='@doctor.GetId()'>@doctor.GetName()</option>
+    }
+    </select>
+    <button type='submit' class="btn-info">Add</button>
     </form>
     <hr>
 
@@ -30,4 +30,5 @@
     }
     </ul>
   }
+  <hr>
 </div>

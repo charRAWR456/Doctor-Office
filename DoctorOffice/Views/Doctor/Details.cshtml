@@ -10,23 +10,23 @@
   <hr />
   @if (@Model["doctorPatients"].Count != 0)
   {
-<div class="row">
+    <div class="row">
     <h4><a class="add-new btn-info col-4" href='/patients/new/'>Add a new patient</a></h4>
     <h3 class="col-4 or">-or-</h3>
 
     <form action='/doctors/@Model["doctor"].GetId()/patients/new' method='post'>
-      <label for='patient-id'>Select a patient</label>
-      <select id='patient-id' name='patient-id' type='text'>
-        @foreach (var patient in @Model["allPatients"])
-        {
-          <option value='@patient.GetId()'>@patient.GetName()</option>
-        }
-      </select>
-      <button type='submit'>Add</button>
+    <label for='patient-id'>Select a patient</label>
+    <select id='patient-id' name='patient-id' type='text'>
+    @foreach (var patient in @Model["allPatients"])
+    {
+      <option value='@patient.GetId()'>@patient.GetName()</option>
+    }
+    </select>
+    <button type='submit'>Add</button>
     </form>
-</div>
+    </div>
 
-<hr>
+    <hr>
     <h4>Current Patients:</h4>
     <ul>
     @foreach (var patient in @Model["doctorPatients"])
@@ -35,5 +35,6 @@
     }
     </ul>
   }
+  <hr>
 
 </div>

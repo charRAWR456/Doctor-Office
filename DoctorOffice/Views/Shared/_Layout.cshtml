@@ -5,32 +5,35 @@
   <title>Doctor Office</title>
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
   <link rel="stylesheet" type="text/css" href="~/css/styles.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="/">Home</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarText">
-    <ul class="navbar-nav mr-auto">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto">
 
-      <li class="nav-item">
-        <a class="nav-link" href="/specialtys">Specialties</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/doctors">Doctor</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/patients">Patients</a>
-      </li>
-    </ul>
-    <span class="navbar-text">
-      Doctors Office
-    </span>
-  </div>
-</nav>
+        <li class="nav-item">
+          <a class="nav-link" href="/specialtys">Specialties</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/doctors">Doctor</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/patients">Patients</a>
+        </li>
+      </ul>
+      <span class="navbar-text">
+        Doctors Office
+      </span>
+    </div>
+  </nav>
   @RenderBody()
+  <footer class="footer text-muted"> © 2018 <span class="jamie">Jamie Pittak</span></footer>
 </body>
 </html>
